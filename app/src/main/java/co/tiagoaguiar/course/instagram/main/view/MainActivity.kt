@@ -9,8 +9,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import co.tiagoaguiar.course.instagram.R
-import co.tiagoaguiar.course.instagram.add.view.AddFragment
-import co.tiagoaguiar.course.instagram.add.view.CameraFragment
+import co.tiagoaguiar.course.instagram.post.view.AddFragment
 import co.tiagoaguiar.course.instagram.common.extension.replaceFragment
 import co.tiagoaguiar.course.instagram.databinding.ActivityMainBinding
 import co.tiagoaguiar.course.instagram.home.view.HomeFragment
@@ -88,6 +87,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
       R.id.menu_bottom_add -> {
         if (currentFragment == addFragment) return false
         currentFragment = addFragment
+        scrollToolbarEnabled = false
       }
       R.id.menu_bottom_profile -> {
         if (currentFragment == profileFragment) return false
@@ -106,7 +106,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
   }
 
   override fun onPostCreated() {
+
+
     homeFragment.presenter.clear()
+
+    if (supportFragmentManager.findFragmentByTag(profileFragment.javaClass.simpleName) != null ){
+  profileFragment.presenter.clear()
+    }
 
     //TODO: profle presenter clear
     binding.mainBottomNav.selectedItemId = R.id.menu_bottom_home

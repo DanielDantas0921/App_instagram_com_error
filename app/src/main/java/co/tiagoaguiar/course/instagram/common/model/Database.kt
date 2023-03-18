@@ -1,13 +1,13 @@
 package co.tiagoaguiar.course.instagram.common.model
 
 import android.net.Uri
+import androidx.core.net.toUri
 import java.io.File
 import java.util.*
 
 object Database {
 
-    val usersAuth = hashSetOf<UserAuth>()
-    val photos = hashSetOf<Photo>()
+    val usersAuth = mutableListOf<UserAuth>()
     val posts = hashMapOf<String, MutableSet<Post>>()
     val feeds = hashMapOf<String, MutableSet<Post>>()
     val followers = hashMapOf<String, Set<String>>()
@@ -16,10 +16,10 @@ object Database {
 
     init {
         val userA =
-            UserAuth(UUID.randomUUID().toString(), "UserA", "userA@gmail.com", "12345678")
+            UserAuth(UUID.randomUUID().toString(), "UserA", "userA@gmail.com", "12345678", Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")))
 
         val userB =
-            UserAuth(UUID.randomUUID().toString(), "UserB", "userB@gmail.com", "87654321")
+            UserAuth(UUID.randomUUID().toString(), "UserB", "userB@gmail.com", "87654321" ,Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")))
 
         usersAuth.add(userA)
         usersAuth.add(userB)
@@ -33,39 +33,39 @@ object Database {
         posts[userB.uuid] = hashSetOf()
         feeds[userB.uuid] = hashSetOf()
 
-
-        feeds[userA.uuid]?.addAll(
-
-            arrayListOf(
-                Post(UUID.randomUUID().toString(),
-                    Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")), "desc" , System.currentTimeMillis() , userA)
-            )
-        )
-
-
-        feeds[userA.uuid]?.addAll(
-
-            arrayListOf(
-                Post(UUID.randomUUID().toString(),
-                    Uri.fromFile(File("asad")), "descriçao bla bal bla bla" , System.currentTimeMillis() , userA)
-            )
-        )
-
-        feeds[userA.uuid]?.addAll(
-
-            arrayListOf(
-                Post(UUID.randomUUID().toString(),
-                    Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")), "desc" , System.currentTimeMillis() , userA)
-            )
-        )
-
-        feeds[userA.uuid]?.addAll(
-
-            arrayListOf(
-                Post(UUID.randomUUID().toString(),
-                    Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")), "desc" , System.currentTimeMillis() , userA)
-            )
-        )
+//
+//        feeds[userA.uuid]?.addAll(
+//
+//            arrayListOf(
+//                Post(UUID.randomUUID().toString(),
+//                    Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")), "desc" , System.currentTimeMillis() , userA)
+//            )
+//        )
+//
+//
+//        feeds[userA.uuid]?.addAll(
+//
+//            arrayListOf(
+//                Post(UUID.randomUUID().toString(),
+//                    Uri.fromFile(File("asad")), "descriçao bla bal bla bla" , System.currentTimeMillis() , userA)
+//            )
+//        )
+//
+//        feeds[userA.uuid]?.addAll(
+//
+//            arrayListOf(
+//                Post(UUID.randomUUID().toString(),
+//                    Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")), "desc" , System.currentTimeMillis() , userA)
+//            )
+//        )
+//
+//        feeds[userA.uuid]?.addAll(
+//
+//            arrayListOf(
+//                Post(UUID.randomUUID().toString(),
+//                    Uri.fromFile(File("/sdcard/Android/media/co.tiagoaguiar.course.instagram/Instagram/2023-03-10-15-25-30-775.jpg")), "desc" , System.currentTimeMillis() , userA)
+//            )
+//        )
 
         feeds[userA.uuid]?.toList()?.let {
             feeds[userB.uuid]?.addAll(it)
@@ -74,5 +74,7 @@ object Database {
 
         sessionAuth = usersAuth.first()
     }
+
+
 
 }
